@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Oasis - Taomlar Markazi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container d-flex flex-column align-items-stretch">
+            
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <a class="navbar-brand m-0" href="#">
+                    <img src="logo.png" id="site-logo" alt="Taomlar Markazi Logo" onerror="this.src='https://via.placeholder.com/150x50/ff6b35/ffffff?text=Sizning+Logo'">
+                </a>
+
+                <div class="welcome-text d-none d-md-block text-center">
+                    ✨ Xush kelibsiz! Har bir luqma lazzatli va muqaddas
+                </div>
+
+                <button class="btn btn-cart position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                    <i class="fa-solid fa-bag-shopping me-2"></i>
+                    <span class="d-none d-sm-inline">Savat</span>
+                    <span id="cart-counter" class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">0</span>
+                </button>
+            </div>
+
+            <div class="welcome-text text-center d-block d-md-none mt-2 small">
+                ✨ Xush kelibsiz!
+            </div>
+
+            <div class="nav-tabs-custom mt-3">
+                <button class="nav-link active" onclick="switchCategory('milliy', this)">Milliy taomlar</button>
+                <button class="nav-link" onclick="switchCategory('fastfood', this)">Fast foodlar</button>
+                <button class="nav-link" onclick="switchCategory('ichimliklar', this)">Ichimliklar</button>
+                <button class="nav-link" onclick="switchCategory('shirinliklar', this)">Shirinliklar</button>
+            </div>
+
+        </div>
+    </nav>
+
+    <header class="hero-section text-center">
+        <div class="container">
+            <p class="text-muted mb-1 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing: 1px;">Premium Sifat & Tezkor Kuryer</p>
+            <h1 class="fw-extrabold text-dark mb-0" id="current-category-heading">Milliy taomlar</h1>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        
+        <div id="pane-milliy" class="category-pane active-pane">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🔥 Eng ko'p sotilgan</span>
+                            <img src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?q=80&w=600" class="food-img" alt="Chust Oshi">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Chust Oshi (Premium)</h3>
+                                <p class="food-desc">Zafar qora guruch, sarxil lahm go'sht, bedana tuxumi va maxsus milliy ziravorlar bilan.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">45,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(101, 'Chust Oshi (Premium)', 45000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🥟 Issiqina</span>
+                            <img src="https://images.unsplash.com/photo-1601050690597-df056fb49785?q=80&w=600" class="food-img" alt="G'ijduvon Somsasi">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Tandir G'ijduvon Somsasi</h3>
+                                <p class="food-desc">Haqiqiy tandirda pishgan, sershira mayda to'g'ralgan go'shtli an'anaviy somsa.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">10,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(102, 'Tandir G\'ijduvon Somsasi', 10000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍖 Haqiqiy lazzat</span>
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600" class="food-img" alt="Koreyka Shashlik">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Koreyka Shashlik</h3>
+                                <p class="food-desc">Kavkazcha usulda marinadlangan, sershira va og'izda eriydigan qo'zichoq qovurg'alari.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">22,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(103, 'Koreyka Shashlik', 22000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pane-fastfood" class="category-pane">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍔 To'yimli</span>
+                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600" class="food-img" alt="Cheeseburger">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Double Cheese Burger</h3>
+                                <p class="food-desc">Ikki qavatli suvli mol go'shti kotleti, Chedder pishlog'i va maxsus burger sousi.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">34,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(201, 'Double Cheese Burger', 34000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🌯 Sharqona</span>
+                            <img src="https://images.unsplash.com/photo-1626700051175-6518c4793f4f?q=80&w=600" class="food-img" alt="Lavash">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Lavash Max (Mol go'shtli)</h3>
+                                <p class="food-desc">Yumshoq yupqa xamir ichida grilda pishgan go'sht, pishloq va tillarang fri.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">32,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(202, 'Lavash Max (Mol go\'shtli)', 32000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍕 Italyancha</span>
+                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=600" class="food-img" alt="Pizza">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Margarita Pissa</h3>
+                                <p class="food-desc">Haqiqiy motsarella pishlog'i, xushbo'y rayhon barglari va pomidorli italyancha sous.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">55,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(203, 'Margarita Pissa', 55000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pane-ichimliklar" class="category-pane">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🥤 Muzday</span>
+                            <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=600" class="food-img" alt="Coca Cola">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Coca-Cola 1.5 L</h3>
+                                <p class="food-desc">Har qanday issiq taomning ajralmas, muzdek va quvvatbaxsh hamrohi.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">13,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(301, 'Coca-Cola 1.5 L', 13000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍋 Tetiklashtiruvchi</span>
+                            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600" class="food-img" alt="Limonad">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Yalpizli Limonad (0.5L)</h3>
+                                <p class="food-desc">Yangi siqilgan limon sharbati, yangi yalpiz barglari va muz bo'laklari uyg'unligi.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">18,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(302, 'Yalpizli Limonad (0.5L)', 18000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🫖 An'anaviy</span>
+                            <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600" class="food-img" alt="Ko'k Choy">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Ko'k Choy (Choynakda)</h3>
+                                <p class="food-desc">Limon bo'laklari va novvot bilan damlangan oliy navli o'zbekona ko'k choy.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">5,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(303, 'Ko\'k Choy (Choynakda)', 5000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pane-shirinliklar" class="category-pane">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍰 Mayin</span>
+                            <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600" class="food-img" alt="Medoviy">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Asalli Medoviy Tort</h3>
+                                <p class="food-desc">Tabiiy tog' asali va mayin smetanali krem bilan qat-qat pishirilgan shirinlik.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">25,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(401, 'Asalli Medoviy Tort', 25000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍦 Desert</span>
+                            <img src="https://images.unsplash.com/photo-1501443762811-c52b6b1ef11c?q=80&w=600" class="food-img" alt="Muzqaymoq">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Mevali Muzqaymoq Asorti</h3>
+                                <p class="food-desc">Tabiiy qaymoqli plombir, shokolad qirindilari va qulupnayli mevalar bilan.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">20,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(402, 'Mevali Muzqaymoq Asorti', 20000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="food-card">
+                        <div class="img-container">
+                            <span class="card-tag">🍫 Shokoladli</span>
+                            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=600" class="food-img" alt="Brauni">
+                        </div>
+                        <div class="food-info">
+                            <div>
+                                <h3 class="food-title">Fondant Brauni</h3>
+                                <p class="food-desc">Ichidan issiq shokolad oqib chiquvchi, fransuzcha uslubdagi afsonaviy desert.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-tag">28,000 <small>SO'M</small></span>
+                                <button class="btn-add-cart" onclick="cartManager.add(403, 'Fondant Brauni', 28000)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between">
+                    <h5 class="modal-title fw-bold text-dark"><i class="fa-solid fa-cart-shopping text-warning me-2"></i>Sizning savatchangiz</h5>
+                    <button type="button" class="btn-close" data-bs-shadow="none" data-bs-dismiss="modal" aria-label="Yopish"></button>
+                </div>
+                <div class="modal-body px-4" style="max-height: 400px; overflow-y: auto;">
+                    <div id="cart-items-wrapper">
+                        </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <span class="text-muted fw-semibold">Jami to'lov summasi:</span>
+                        <span class="fs-4 fw-black text-primary" id="cart-total-sum">0 so'm</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light rounded-3 px-4 py-2 fw-semibold text-secondary" data-bs-dismiss="modal">Yopish</button>
+                    <button type="button" class="btn btn-cart px-4 py-2" id="btn-go-checkout" onclick="checkoutFlow.openOrderModal()" disabled>
+                        Buyurtma berish <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-dark"><i class="fa-solid fa-truck-fast text-primary me-2"></i>Buyurtmani rasmiylashtirish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+                </div>
+                <form id="mainOrderForm" onsubmit="checkoutFlow.submitOrder(event)">
+                    <div class="modal-body px-4">
+                        
+                        <div class="mb-3">
+                            <label for="input-fullname" class="form-label fw-semibold text-secondary small">Ism va Familiya</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted"><i class="fa-regular fa-user"></i></span>
+                                <input type="text" class="form-control" id="input-fullname" placeholder="Masalan: Asadbek Rahmonov" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="input-phone" class="form-label fw-semibold text-secondary small">Telefon raqam</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted"><i class="fa-solid fa-phone"></i></span>
+                                <input type="tel" class="form-control" id="input-phone" placeholder="+998 (99) 123-4567" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="input-location" class="form-label fw-semibold text-secondary small">Lokatsiya (Aniq manzil)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted"><i class="fa-solid fa-location-dot"></i></span>
+                                <input type="text" class="form-control" id="input-location" placeholder="Viloyat, Tuman, Uy raqami / Mo'ljal" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark small d-block mb-3">To'lov uslubini tanlang:</label>
+                            
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="w-100 position-relative">
+                                        <input class="form-check-input position-absolute d-none" type="radio" name="paymentMethod" id="pay-online" value="online" checked onchange="checkoutFlow.togglePaymentSection()">
+                                        <div class="payment-card-option text-center">
+                                            <i class="fa-solid fa-credit-card fs-4 text-primary mb-2 d-block"></i>
+                                            <span class="fw-semibold small d-block">Hozir onlayn to'lov</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="w-100 position-relative">
+                                        <input class="form-check-input position-absolute d-none" type="radio" name="paymentMethod" id="pay-delivery" value="delivery" onchange="checkoutFlow.togglePaymentSection()">
+                                        <div class="payment-card-option text-center">
+                                            <i class="fa-solid fa-hand-holding-dollar fs-4 text-secondary mb-2 d-block"></i>
+                                            <span class="fw-semibold small d-block">Eshik tagida to'lov</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="receipt-upload-box" class="p-3 rounded-4 bg-light border border-dashed mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa-solid fa-wallet text-warning me-2 fs-5"></i>
+                                <span class="fw-bold small text-dark">Bizning Karta (Humo / Uzcard):</span>
+                            </div>
+                            <p class="mb-3 text-muted font-monospace small bg-white p-2 rounded text-center border fw-bold">9860 1201 5432 9988</p>
+                            
+                            <label for="file-receipt" class="form-label fw-semibold text-secondary small mb-1">To'lov chekini yuklang (.jpg, .png)</label>
+                            <input class="form-control form-control-sm" type="file" id="file-receipt">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light rounded-3 px-4 py-2 text-secondary fw-semibold" data-bs-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-success rounded-3 px-4 py-2 fw-bold text-white"><i class="fa-solid fa-check-double me-2"></i>Tasdiqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

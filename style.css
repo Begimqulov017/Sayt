@@ -1,0 +1,279 @@
+:root {
+    --primary: #ff6b35;
+    --primary-hover: #e0531f;
+    --secondary: #2f4858;
+    --accent: #ffb627;
+    --bg-body: #f9fbfd;
+    --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+    --card-hover-shadow: 0 20px 40px rgba(255, 107, 53, 0.12);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-body);
+    color: #2d3748;
+    overflow-x: hidden;
+}
+
+/* Premium Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+}
+
+.navbar-brand img {
+    max-height: 50px;
+    object-fit: contain;
+}
+
+.welcome-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+/* Zamonaviy Kategoriya Tugmalari */
+.nav-tabs-custom {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.nav-tabs-custom .nav-link {
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs-custom .nav-link:hover {
+    background: #e2e8f0;
+    color: var(--secondary);
+}
+
+.nav-tabs-custom .nav-link.active {
+    background: var(--primary);
+    color: white !important;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.25);
+}
+
+/* Savat Tugmasi */
+.btn-cart {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cart:hover {
+    background: #1f303a;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cart-badge {
+    background: var(--primary);
+    border: 2px solid var(--secondary);
+    font-size: 0.75rem;
+    padding: 5px 8px;
+}
+
+/* Sarlavha Banneri */
+.hero-section {
+    background: linear-gradient(135deg, #fff5f0 0%, #fff 100%);
+    padding: 35px 0 15px 0;
+    border-bottom: 1px solid rgba(255, 107, 53, 0.06);
+}
+
+/* Taomlar Kartasi */
+.food-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.food-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.img-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 70%;
+    background-color: #f1f5f9;
+}
+
+.food-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.food-card:hover .food-img {
+    transform: scale(1.08);
+}
+
+.card-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.food-info {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.food-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 8px;
+}
+
+.food-desc {
+    font-size: 0.88rem;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+.price-tag {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.btn-add-cart {
+    background: #fff0ea;
+    color: var(--primary);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-add-cart:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Modallar va formalarni bezash */
+.modal-content {
+    border: none;
+    border-radius: 28px;
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 18px;
+    margin-bottom: 12px;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.btn-qty {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: #f1f5f9;
+    color: var(--secondary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-qty:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.form-control {
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.payment-card-option {
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked + .payment-card-option {
+    border-color: var(--primary);
+    background-color: #fffaf8;
+}
+
+/* Panellarni yashirish va ko'rsatish */
+.category-pane {
+    display: none;
+}
+
+.category-pane.active-pane {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -277,3 +277,183 @@ input[type="radio"]:checked + .payment-card-option {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* =============================================
+   RESPONSIVE — Telefon va Tablet moslashtirish
+   ============================================= */
+
+/* Tablet (768px gacha) */
+@media (max-width: 768px) {
+
+    /* Navbar */
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .navbar-brand img {
+        max-height: 38px;
+    }
+
+    .btn-cart {
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    /* Kategoriya tugmalari — scroll qilib o'tish */
+    .nav-tabs-custom {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+        gap: 8px;
+    }
+
+    .nav-tabs-custom::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-tabs-custom .nav-link {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+
+    /* Hero */
+    .hero-section {
+        padding: 20px 0 10px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Kartalar — mobilida 2 ta qator */
+    .food-card {
+        border-radius: 18px;
+    }
+
+    .food-info {
+        padding: 16px;
+    }
+
+    .food-title {
+        font-size: 1.05rem;
+    }
+
+    .food-desc {
+        font-size: 0.82rem;
+        margin-bottom: 12px;
+    }
+
+    .price-tag {
+        font-size: 1.1rem;
+    }
+
+    .img-container {
+        padding-top: 60%;
+    }
+
+    /* Main padding */
+    main.container {
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-top: 24px !important;
+        margin-bottom: 24px !important;
+    }
+
+    /* Modal */
+    .modal-content {
+        border-radius: 20px 20px 0 0;
+    }
+
+    .modal-dialog {
+        margin: 0;
+        align-items: flex-end;
+        min-height: 100%;
+    }
+
+    .modal-dialog-centered {
+        align-items: flex-end;
+    }
+
+    .modal-body {
+        max-height: 65vh !important;
+    }
+}
+
+/* Kichik telefon (480px gacha) */
+@media (max-width: 480px) {
+
+    /* Kartalar — mobilida 1 ta ustun */
+    .row.g-4 > .col-12 {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .food-title {
+        font-size: 1rem;
+    }
+
+    .nav-tabs-custom .nav-link {
+        padding: 7px 14px;
+        font-size: 0.8rem;
+    }
+
+    /* To'lov kartalari */
+    .payment-card-option {
+        padding: 12px 8px;
+    }
+
+    .payment-card-option .fs-4 {
+        font-size: 1.2rem !important;
+    }
+
+    .payment-card-option span {
+        font-size: 0.75rem !important;
+    }
+
+    /* Cart items */
+    .cart-item-row {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .cart-item-row h6 {
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobilda hover effektini o'chirish (barmoq bilan tegishda muammo) */
+@media (hover: none) {
+    .food-card:hover {
+        transform: none;
+        box-shadow: var(--card-shadow);
+    }
+
+    .food-card:hover .food-img {
+        transform: none;
+    }
+
+    .btn-cart:hover {
+        transform: none;
+    }
+}
+
+/* Savat — mobilda pastdan chiqsin (bottom sheet) */
+@media (max-width: 768px) {
+    #cartModal .modal-dialog,
+    #orderModal .modal-dialog {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    #cartModal .modal-content,
+    #orderModal .modal-content {
+        border-radius: 24px 24px 0 0;
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}

@@ -112,6 +112,54 @@ const cartManager = {
 
 // Buyurtma berish jarayoni va formalar boshqaruvi
 const checkoutFlow = {
+
+    // GPS orqali avtomatik lokatsiya olish
+    getLocation: function() {
+        const btn = document.getElementById('btn-get-location');
+        const status = document.getElementById('location-status');
+        const input = document.getElementById('input-location');
+
+        if (!navigator.geolocation) {
+            status.innerHTML = `<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Brauzeringiz GPS ni qo'llab-quvvatlamaydi.</span>`;
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+        status.innerHTML = `<span class="text-muted"><i class="fa-solid fa-spinner fa-spin me-1"></i>Lokatsiya aniqlanmoqda...</span>`;
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                input.dataset.mapsLink = `https://maps.google.com/?q=${lat},${lon}`;
+                input.dataset.lat = lat;
+                input.dataset.lon = lon;
+                input.value = `${lat},${lon}`;
+
+                btn.innerHTML = '<i class="fa-solid fa-circle-check me-2 text-success"></i>Lokatsiya olindi ✓';
+                btn.classList.remove('btn-outline-primary');
+                btn.classList.add('btn-success', 'text-white');
+                status.innerHTML = `<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i>Lokatsiya muvaffaqiyatli aniqlandi!</span>`;
+
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-crosshairs"></i>';
+            },
+            (error) => {
+                const msgs = {
+                    1: "Lokatsiya ruxsati rad etildi. Brauzer sozlamalaridan ruxsat bering.",
+                    2: "Lokatsiya aniqlanmadi. Internetni tekshiring.",
+                    3: "Vaqt tugadi. Qayta urinib ko'ring."
+                };
+                status.innerHTML = `<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>${msgs[error.code] || "Noma'lum xato."}</span>`;
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-crosshairs"></i>';
+            },
+            { timeout: 10000, enableHighAccuracy: true }
+        );
+    },
+
     // Buyurtma berish formasini ochish
     openOrderModal: function() {
         const cartModalInstance = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
@@ -134,40 +182,116 @@ const checkoutFlow = {
     },
 
     // Formani tasdiqlash va Adminga yuborish
-    submitOrder: function(event) {
+    submitOrder: async function(event) {
         event.preventDefault();
+
+        const BOT_TOKEN = '8792621213:AAFxz0IML9PlmUayxtjwn-IHdQe_Ho6GgKI';
+        const ADMIN_CHAT_ID = '5774691559';
 
         const clientName = document.getElementById('input-fullname').value;
         const clientPhone = document.getElementById('input-phone').value;
-        const clientLoc = document.getElementById('input-location').value;
+        const locationInput = document.getElementById('input-location');
+        const clientLoc = locationInput.value;
+        const mapsLink = locationInput.dataset.mapsLink || null;
         const paymentOption = document.querySelector('input[name="paymentMethod"]:checked').value;
         const receiptFile = document.getElementById('file-receipt').files[0];
 
-        // Adminga boradigan ma'lumotlar paketi (JSON simulyatsiyasi)
-        const compiledPayload = {
-            customer: {
-                name: clientName,
-                phone: clientPhone,
-                address: clientLoc
-            },
-            orderItems: shoppingCartState,
-            paymentStrategy: paymentOption === 'online' ? 'Karta orqali (Onlayn Chek)' : 'Eshik oldida (Naqd/Karta)',
-            receiptAttached: receiptFile ? receiptFile.name : 'Yuklanmagan / Naqd to\'lov'
-        };
+        // Jami summani hisoblash
+        const totalSum = shoppingCartState.reduce((acc, p) => acc + p.price * p.quantity, 0);
 
-        // Brauzer konsoliga (Admin boshqaruv pultiga) ma'lumotni uzatish
-        console.log("%c--- ADMIN PANELGA BUYURTMA KELIB TUSHDI ---", "color: #ff6b35; font-size: 14px; font-weight: bold;", compiledPayload);
+        // Buyurtma tarkibini chiroyli ko'rinishda yozish
+        const orderLines = shoppingCartState.map(p =>
+            `  • ${p.name} x${p.quantity} — ${(p.price * p.quantity).toLocaleString('uz-UZ')} so'm`
+        ).join('\n');
 
-        // Mijozga chiroyli xabar ko'rsatish
-        alert(`Rahmat, ${clientName}!\nBuyurtmangiz muvaffaqiyatli qabul qilindi va admin panelga uzatildi.\n\nTaom tayyor bo'lgach kuryerimiz uni tezda yetkazib beradi!`);
+        const paymentLabel = paymentOption === 'online' ? '💳 Onlayn (Karta)' : '💵 Eshik oldida (Naqd/Karta)';
+        const locationLine = mapsLink
+            ? `📍 *Lokatsiya:* [Xaritada ko'rish](${mapsLink})`
+            : `📍 *Manzil:* ${clientLoc}`;
 
-        // Savatni va formalarni tozalash, oynani yopish
-        shoppingCartState = [];
-        cartManager.syncDOM();
-        document.getElementById('mainOrderForm').reset();
-        this.togglePaymentSection(); // fayl yuklash joyini asl holatiga qaytarish
-        
-        const checkoutModalInstance = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
-        if (checkoutModalInstance) checkoutModalInstance.hide();
+        // Telegram xabar matni
+        const message =
+`🛎 *YANGI BUYURTMA KELDI!*
+
+👤 *Ism:* ${clientName}
+📞 *Telefon:* ${clientPhone}
+${locationLine}
+
+🧾 *Buyurtma tarkibi:*
+${orderLines}
+
+💰 *Jami to'lov:* ${totalSum.toLocaleString('uz-UZ')} so'm
+💳 *To'lov usuli:* ${paymentLabel}`;
+
+        // GPS olinganligini tekshirish
+        if (!locationInput.dataset.lat) {
+            document.getElementById('location-status').innerHTML = 
+                `<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Iltimos, avval GPS orqali lokatsiyangizni oling!</span>`;
+            document.getElementById('btn-get-location').classList.add('border-danger');
+            return;
+        }
+
+        // Tugmani bloklash va yuborilmoqda ko'rsatish
+        const submitBtn = document.querySelector('#mainOrderForm [type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Yuborilmoqda...';
+
+        try {
+            // 1. Matnli xabar yuborish
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: ADMIN_CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            // 2. GPS lokatsiya yuborish (Telegram native xarita)
+            if (locationInput.dataset.lat && locationInput.dataset.lon) {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_CHAT_ID,
+                        latitude: parseFloat(locationInput.dataset.lat),
+                        longitude: parseFloat(locationInput.dataset.lon)
+                    })
+                });
+            }
+
+            // 3. Agar chek fayli yuklangan bo'lsa — uni ham yuborish
+            if (receiptFile) {
+                const formData = new FormData();
+                formData.append('chat_id', ADMIN_CHAT_ID);
+                formData.append('photo', receiptFile);
+                formData.append('caption', `📎 ${clientName} ning to'lov cheki`);
+
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+
+            // Mijozga muvaffaqiyat xabari
+            alert(`✅ Rahmat, ${clientName}!\nBuyurtmangiz adminga muvaffaqiyatli yuborildi.\n\nTaom tayyor bo'lgach kuryerimiz tezda yetkazib beradi!`);
+
+            // Savatni va formalarni tozalash
+            shoppingCartState = [];
+            cartManager.syncDOM();
+            document.getElementById('mainOrderForm').reset();
+            this.togglePaymentSection();
+
+            const checkoutModalInstance = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+            if (checkoutModalInstance) checkoutModalInstance.hide();
+
+        } catch (err) {
+            console.error('Telegram xato:', err);
+            alert('❌ Xatolik yuz berdi! Internet aloqasini tekshiring va qayta urinib ko\'ring.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-check-double me-2"></i>Tasdiqlash';
+        }
     }
 };

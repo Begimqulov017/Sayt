@@ -81,7 +81,7 @@
                     <div class="food-card">
                         <div class="img-container">
                             <span class="card-tag">🥟 Issiqina</span>
-                            <img src="https://images.unsplash.com/photo-1601050690597-df056fb49785?q=80&w=600" class="food-img" alt="G'ijduvon Somsasi">
+                            <img src="https://i.ytimg.com/vi/8b5_BtXnXJs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCY6LgFK4bnOtG6wxOxPjieYL9Cmw" class="food-img" alt="G'ijduvon Somsasi">
                         </div>
                         <div class="food-info">
                             <div>
@@ -146,7 +146,7 @@
                     <div class="food-card">
                         <div class="img-container">
                             <span class="card-tag">🌯 Sharqona</span>
-                            <img src="https://images.unsplash.com/photo-1626700051175-6518c4793f4f?q=80&w=600" class="food-img" alt="Lavash">
+                            <img src="https://maxway.uz/_next/image?url=https%3A%2F%2Fcdn.delever.uz%2Fdelever%2F137a5e3d-9d92-482a-8cf2-fde212610697&w=3840&q=75" class="food-img" alt="Lavash">
                         </div>
                         <div class="food-info">
                             <div>
@@ -276,7 +276,7 @@
                     <div class="food-card">
                         <div class="img-container">
                             <span class="card-tag">🍦 Desert</span>
-                            <img src="https://images.unsplash.com/photo-1501443762811-c52b6b1ef11c?q=80&w=600" class="food-img" alt="Muzqaymoq">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wFCshZco3Hm9pQrQ5kkY7KpnCHdNP8amaA&s" class="food-img" alt="Muzqaymoq">
                         </div>
                         <div class="food-info">
                             <div>
@@ -370,11 +370,14 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="input-location" class="form-label fw-semibold text-secondary small">Lokatsiya (Aniq manzil)</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light text-muted"><i class="fa-solid fa-location-dot"></i></span>
-                                <input type="text" class="form-control" id="input-location" placeholder="Viloyat, Tuman, Uy raqami / Mo'ljal" required>
+                            <label class="form-label fw-semibold text-secondary small">Lokatsiya</label>
+                            <input type="hidden" id="input-location">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-outline-primary py-3" id="btn-get-location" onclick="checkoutFlow.getLocation()">
+                                    <i class="fa-solid fa-crosshairs me-2"></i>GPS orqali lokatsiya olish
+                                </button>
                             </div>
+                            <div id="location-status" class="mt-2 small"></div>
                         </div>
 
                         <div class="mb-4">
